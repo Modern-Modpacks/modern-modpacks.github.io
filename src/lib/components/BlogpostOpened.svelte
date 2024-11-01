@@ -98,12 +98,12 @@
     <title>{blogpost?.metadata.title} {blogpost?.metadata.subtitle}</title>
 </svelte:head>
 
-<div class="min-h-[100vh]" in:fly={{x: window.screenX, easing: sineOut, duration: 300 * +$visitedBlog * +!$reducedMotion, delay: 300 * +$visitedBlog * +!$reducedMotion}} out:fly={{x: window.screenX, easing: sineIn, duration: 300 * +!$reducedMotion}}>
+<div class="min-h-[100vh]" out:fly={{x: window.screenX, easing: sineIn, duration: 300 * +!$reducedMotion}}>
     {#if Object.keys($blogPosts ?? {}).length == $expectedBlogPostsLength}
         <!-- svelte-ignore empty-block -->
         {#if blogpost}
             {#await fetchExtraData() then}
-                <div>
+                <div in:fly={{x: window.screenX, easing: sineOut, duration: 300 * +$visitedBlog * +!$reducedMotion, delay: 300 * +$visitedBlog * +!$reducedMotion}}>
                     <img src="{blogpost.thumbnail}" alt='"{blogpost.metadata.title}" blogpost thumbnail' class="w-full h-[37.5vw] object-cover">
                     <button class="group absolute top-20 left-8 mobile:top-8 h-12 w-12 mobile:h-8 mobile:w-8 p-2 box-content {$lightMode ? "bg-header-light" : "bg-header-dark"} {$lightMode ? "mobile:bg-secondary-light" : "mobile:bg-secondary-dark"} mobile:bg-opacity-75 rounded-full" on:click={() => {closeBlogpost(true)}}>
                         <ArrowLeft class="w-full h-full destkop:translate-x-0.5 duration-200 desktop:group-hover:-translate-x-0.5" />
