@@ -139,6 +139,7 @@
         "writtenby": "Написано {author} {time}",
         "editedby": "В последний раз изменено {author} {time}",
         "commentedon": "прокомментировали {time}",
+        "deletecomment": "Удалить",
 
         "missingblogpost": "Больше блогпостов",
         "missingblogpostsub": "не найдено!",

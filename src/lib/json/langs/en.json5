@@ -184,6 +184,7 @@
         "writtenby": "Written by {author} on {time}",
         "editedby": "Last edited by {author} on {time}",
         "commentedon": "commented on {time}",
+        "deletecomment": "Delete",
 
         "missingblogpost": "No more",
         "missingblogpostsub": "blogposts available!",

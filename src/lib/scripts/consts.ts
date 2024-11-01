@@ -8,7 +8,10 @@ const consts = {
     MISSING_BLOGPOST_THUMBNAIL: "https://raw.githubusercontent.com/Modern-Modpacks/website/refs/heads/blogposts/noblogpost.png", // A link to what should be shown isntead of the thumbnail if the blogpost is not found
 
     WORD_BLOCKLIST: "https://gist.githubusercontent.com/Gcat101/b8ae78d19252e8f7b7225a377e0a0f81/raw/badwords.txt", // A link to a text file containing regexes for all words that need to be blocked
-    BLOG_BANLIST: [], // List of people banned from commenting on blogs 
+    BLOG_ADMINS: [ // List of people who are able to delete other people's blog comments
+        "Gcat101"
+    ],
+    BLOG_BANLIST: [], // List of people banned from commenting on blogs
 
     COLORS: [ // MM's brand colors' names
         "red",

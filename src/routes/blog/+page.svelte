@@ -8,7 +8,7 @@
     import BigBlogpost from "$lib/components/BigBlogpost.svelte";
     import { onMount } from "svelte";
     import BlogpostOpened from "$lib/components/BlogpostOpened.svelte";
-    import { getBlogPost, openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
+    import { closeBlogpost, getBlogPost, openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
     import GithubLoginBar from "$lib/components/GithubLoginBar.svelte";
     import { page } from "$app/stores";
     import { PUBLIC_GITHUB_CLIENT_ID } from "$env/static/public";
@@ -65,7 +65,8 @@
             )?.json()
         ).tree
         if (!files) return
-        let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")).toSorted().reverse() // Filter by markdown files
+        let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")).toSorted() // Filter by markdown files
+        mdFiles.reverse()
         $expectedBlogPostsLength = mdFiles.length // Set the expected number of blogposts
 
         // For each of the markdown files, get info and add to relevant stores
@@ -121,6 +122,9 @@
             removeParams()
             openBlogpost($page.url.searchParams.get("id")!)
         }
+        window.addEventListener("popstate", () => { // Enable back button to work in posts
+            if (!window.location.hash && !window.location.search) closeBlogpost(true)
+        })
 
         setTimeout(() => {toggleScroll(true); $visitedBlog = true}, 1500 * +(!window.location.hash))
         setInterval(() => {searchQuery = searchBar?.value ?? ""}, 500)
@@ -150,7 +154,7 @@
                     <div class="w-[56rem] mobile:w-[75%] flex flex-col gap-[4.5rem]">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
                         {#if !$mobile}
-                            <span class="flex justify-between w-full [&>button]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
+                            <span class="flex justify-between w-full -mt-8 [&>a]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
                                 <BigBlogpost id={Object.keys($blogPosts ?? {})[1]} delay={500} />
                                 <BigBlogpost id={Object.keys($blogPosts ?? {})[2]} delay={750} />
                             </span>
@@ -163,8 +167,8 @@
                                 <input type="text" autocomplete="off" placeholder="{$_("ui.search")}" bind:this={searchBar} class="h-full w-full text-2xl bg-transparent placeholder:font-semibold {$lightMode ? "placeholder:text-text-light" : "placeholder:text-text-dark"} placeholder:opacity-35 focus:outline-none" on:input={() => {loadAllPosts = false}}>
                                 <Search class="h-8 w-8 pl-6 box-content" />
                             </span>
-                            <div class="flex mobile:flex-col gap-4 mobile:gap-8 mt-6">
-                                <span class="w-[45%] mobile:w-full h-fit p-4 {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"} rounded-xl">
+                            <div class="flex mobile:flex-col gap-6 mobile:gap-8 mt-6">
+                                <span class="min-w-[30%] mobile:w-full h-fit p-4 {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"} rounded-xl">
                                     <span class="flex justify-between duration-200{!tagsHidden ? " mobile:mb-2" : ""}">
                                         <h2 class="text-2xl ml-1">{$_("ui.tagstitle")}</h2>
                                         {#if selectedTag!=null}

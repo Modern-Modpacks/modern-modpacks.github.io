@@ -4,21 +4,15 @@ import serverConsts from "$lib/server/serverConsts";
 import moment from "moment";
 import type { RequestHandler } from "./$types";
 import consts from "$lib/scripts/consts";
-import { addBlogpostToDB } from "$lib/server/serverUtils";
+import { addBlogpostToDB, getBlogpostComments } from "$lib/server/serverUtils";
 
 // Get and add comments for blogposts using their ids
-const getComments = async (id: string) : Promise<Comment[]> => {
-    let comments = (await serverConsts.DB.from("blogs").select("comments").eq("id", id)).data
-
-    if (!comments?.length) return []
-    return comments[0].comments
-}
 const badWordRegex = (await (await fetch(consts.WORD_BLOCKLIST)).text()).split("\n").filter(l => !!l)
 export const GET: RequestHandler = async ({ url }) => {
     let id = url.searchParams.get("id")
     if (!id) return new Response("-1", {status: 400})
 
-    return new Response(JSON.stringify((await getComments(id)).filter(c => !consts.BLOG_BANLIST.includes(c.author.name.toLowerCase()))))
+    return new Response(JSON.stringify((await getBlogpostComments(id)).filter(c => !consts.BLOG_BANLIST.includes(c.author.name.toLowerCase()))))
 }
 export const POST: RequestHandler = async ({ url, request }) => {
     let id = url.searchParams.get("id")
@@ -32,7 +26,7 @@ export const POST: RequestHandler = async ({ url, request }) => {
     
     await addBlogpostToDB(id)
 
-    let comments = await getComments(id)
+    let comments = await getBlogpostComments(id)
     let author = await (await sendGithubApiRequestWithSetKey("user", true, token))?.json()
     if (consts.BLOG_BANLIST.includes(author.login.toLowerCase())) return new Response("OK")
 

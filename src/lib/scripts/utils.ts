@@ -1,4 +1,4 @@
-import type { BlogPost, Contributor, Coordinates } from "./interfaces"
+import type { BlogPost, Contributor, Coordinates, Comment } from "./interfaces"
 import consts from "./consts"
 import { contextMenuOpenedBy, ghApiKey, githubRateLimited, openedBlogPost, popupOpenedBy } from "./stores"
 import { get } from "svelte/store"
@@ -112,7 +112,7 @@ export const navigateCleanup = () => { // Cleanup stores and unlock page after n
 
 export const openBlogpost = (id: string) => { // Open a blogpost on the blog page
     openedBlogPost.set(id)
-    history.replaceState("", document.title, window.location.pathname + "?id="+id)
+    history.pushState("", document.title, window.location.pathname + "?id="+id)
 }
 export const closeBlogpost = (scrollToTop: boolean) => { // Close a blogpost
     openedBlogPost.set(null)
@@ -120,4 +120,7 @@ export const closeBlogpost = (scrollToTop: boolean) => { // Close a blogpost
     document.title = "Modern Modpacks"
 
     if (scrollToTop) setTimeout(() => {scrollTo(0, 0)}, 300)
+}
+export const canDeleteComment = (user: string, author: string) : boolean => {
+    return consts.BLOG_ADMINS.includes(user) || author==user
 }
