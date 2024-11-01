@@ -14,7 +14,7 @@
     $: blogpost = id ? $blogPosts![id] : null
 </script>
 
-<a href="{id ? `?id=${id}` : ""}" class="block {$visitedBlog ? "" : " motion-safe:opacity-0 motion-safe:animate-comeup "}h-fit {$lightMode ? "bg-header-light" : "bg-header-dark"} rounded-3xl {blogpost ? "cursor-pointer" : "cursor-not-allowed"}" style="animation-delay: {delay}ms;" on:click={e => {e.preventDefault(); if (id) openBlogpost(id)}}>
+<a href="{id ? `?id=${id}` : ""}" class="block {$visitedBlog ? "" : " motion-safe:opacity-0 motion-safe:animate-comeup "}h-fit {$lightMode ? "bg-header-light" : "bg-header-dark"} rounded-3xl {blogpost ? "cursor-pointer" : "cursor-not-allowed"}" style="animation-delay: {delay}ms;" on:click|preventDefault={() => {if (id) openBlogpost(id)}}>
     <!-- 8:3 ratio -->
     <span class="relative block pt-[37.5%]">
         <img src="{blogpost ? blogpost.thumbnail : consts.MISSING_BLOGPOST_THUMBNAIL}" alt="{blogpost ? '"'+blogpost.metadata.title+'"' : "Missing"} blogpost thumbnail" class="absolute w-full left-0 top-0 object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300{blogpost ? " motion-safe:hover:scale-[102.5%]" : ""}">

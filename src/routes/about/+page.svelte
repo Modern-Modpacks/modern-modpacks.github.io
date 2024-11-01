@@ -206,9 +206,7 @@
             </span>
             <div
                 class="overflow-hidden mobile:overflow-scroll h-[34rem] mobile:h-80 mobile:pb-10 mt-6 flex flex-col gap-4 mobile:gap-3 w-fit" style="-webkit-overflow-scrolling: touch;"
-                on:wheel={e => {
-                    e.preventDefault()
-
+                on:wheel|preventDefault={e => {
                     let langTranslators = translators[lastActivePin?.lang ?? ""]
                     if (langTranslators==null) return
                     sidebarScrolled = Math.min(Math.max(sidebarScrolled + Math.sign(e.deltaY), 0), Math.floor(translators[lastActivePin?.lang ?? ""].length / 6))

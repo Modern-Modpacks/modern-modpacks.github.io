@@ -12,7 +12,7 @@
     $: blogpost = $blogPosts![id]
 </script>
 
-<a href="?id={id}" class="grid desktop:grid-cols-[1fr_1.2fr] desktop:gap-5 w-full h-[9rem] mobile:h-fit {$lightMode ? "bg-header-light" : "bg-header-dark"} rounded-3xl cursor-pointer" title="{blogpost.metadata.title} {blogpost.metadata.subtitle}" on:click={id ? e => {e.preventDefault(); openBlogpost(id)} : null}>
+<a href="?id={id}" class="grid desktop:grid-cols-[1fr_1.2fr] desktop:gap-5 w-full h-[9rem] mobile:h-fit {$lightMode ? "bg-header-light" : "bg-header-dark"} rounded-3xl cursor-pointer" title="{blogpost.metadata.title} {blogpost.metadata.subtitle}" on:click|preventDefault={id ? () => {openBlogpost(id)} : null}>
     <img src="{blogpost.thumbnail}" alt='"{blogpost.metadata.title}" blogpost thumbnail' class="mobile:w-full mobile:h-[28vw] object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300 motion-safe:hover:scale-105">
     <div class="flex flex-col justify-center h-full py-4 mobile:p-4">
         <b class="text-xl text-left block mobile:pb-2">{blogpost.metadata.title} <span class="opacity-35">{blogpost.metadata.subtitle}</span></b>
