@@ -78,8 +78,9 @@
         "titles": ["questwriter", "scripter"],
         "socials": ["https://www.youtube.com/channel/UCHkKqiJqKVF89hLAcx9VNqQ", "https://www.reddit.com/user/ZeldaLord_/"]
     }
-    /* {
+    {
         "name": "tizu",
+        "avatar_url": "https://tizu.dev/profile",
 
         "github": {
             "username": "tizu69",
@@ -88,5 +89,5 @@
 
         "titles": ["webdev", "frontendconsult"],
         "socials": ["https://tizu.dev"]
-    } */
+    }
 ]
