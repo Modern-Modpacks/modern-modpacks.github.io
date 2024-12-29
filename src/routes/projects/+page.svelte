@@ -122,7 +122,7 @@
 
 <main>
     <div class="w-[100vw] h-[100vh] mobile:h-[87.5vh] relative bg-black bg-opacity-50 flex mobile:flex-col mobile:[&>*]:text-center gap-10 mobile:gap-6 items-center justify-center" id="title">
-        <div class="absolute w-full h-full -z-10 object-cover mobile:bg-center" style="background-image: url('{banner}');" id="bg" />
+        <div class="absolute w-full h-full -z-10 object-cover bg-cover mobile:bg-center" style="background-image: url('{banner}');" id="bg" />
 
         <img src="{consts.LOGO_URL}" class="w-64 h-64 mobile:w-52 mobile:h-52 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="Modern Modpacks logo">
         <span class="w-[60%] mobile:w-full flex flex-col mobile:items-center gap-3">
